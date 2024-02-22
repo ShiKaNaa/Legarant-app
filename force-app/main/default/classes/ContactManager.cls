@@ -1,10 +1,10 @@
 @RestResource(urlMapping='/Contacts/*')
 global with sharing class ContactManager {
 
-
     @HttpPost
     global static Id createContact(String firstName, String lastName, String email, String phone) {
-        List<Contact> ctct = [SELECT Id FROM Contact WHERE Email = :email LIMIT 1];
+        List<Contact> ctct = [SELECT Id FROM Contact WHERE Email = :email];
+        // S'il un contact est retrouvé => renvoit directement l'Id
         if(ctct.size() != 0) {
             return ctct[0].Id;
         } else {
@@ -24,6 +24,7 @@ global with sharing class ContactManager {
         RestRequest req = RestContext.request;
         String ctctId = req.requestURI.substring(req.requestURI.lastIndexOf('/') + 1);
         Contact ctct = [SELECT Id FROM Contact WHERE ID = :ctctId];
+        // On crée une map<fieldName : value>
         Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(req.requestBody.toString());
         for (String field : data.keySet()) {
             ctct.put(field, data.get(field));
@@ -39,7 +40,7 @@ global with sharing class ContactManager {
         Contact ctct = [SELECT Id FROM Contact WHERE ID = :ctctId];
         ctct.isActive__c = false;
         update ctct;
-        return ctctId;
+        return (Id)ctctId;
     }
 
 }

@@ -18,6 +18,7 @@ global with sharing class ContractManager {
         RestRequest request = RestContext.request;
         String contractId = request.requestURI.substring(request.requestURI.lastIndexOf('/') + 1);
         Contract thisContract = [SELECT Id FROM Contract WHERE Id = :contractId];
+        // On crée une map<fieldName : value>
         Map<String, Object> data = (Map<String, Object>)JSON.deserializeUntyped(request.requestbody.tostring());
         for(String field : data.keySet()) {
             if(field == 'startDate') {

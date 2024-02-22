@@ -39,7 +39,8 @@ private class ContractManagerTest {
         // Simule une requête PATCH pour la méthode de mise à jour
         RestContext.request.requestURI = '/services/apexrest/Contracts/' + testContract.Id;
         RestContext.request.httpMethod = 'PATCH';
-        RestContext.request.requestbody = Blob.valueOf('{"startDate": "2023-12-12","contractTerm": "16","status": "Activated"}');
+        // Update de la startDate & contractTerm
+        RestContext.request.requestbody = Blob.valueOf('{"startDate": "2024-02-25","contractTerm": "16","status": "Activated"}');
         RestContext.response = new RestResponse();
 
         ContractManager.updateContract();

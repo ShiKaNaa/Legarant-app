@@ -30,6 +30,7 @@ private class ContactManagerTest {
 
         List<Contact> ctctList = [SELECT Id, FirstName, LastName, Email FROM Contact WHERE Email = 'test@test.com'];
 
+        // On vérifie qu'il n'y a bien qu'un seul contact avec la même adresse mail
         System.assertEquals('test@test.com', ctctList[0].Email);
         System.assertEquals(1, ctctList.size());
     }
